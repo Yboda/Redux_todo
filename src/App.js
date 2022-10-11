@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "./components/Header";
+import Todolist from "./components/Todolist";
 
 const StContainer = styled.div`
   max-width: 1200px;
@@ -9,7 +11,12 @@ const StContainer = styled.div`
 `;
 
 function App() {
-  return <StContainer>레이아웃</StContainer>;
+  return (
+    <StContainer>
+      <Header />
+      <Todolist />
+    </StContainer>
+  );
 }
 
 export default App;
