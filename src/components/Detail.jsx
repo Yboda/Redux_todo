@@ -58,9 +58,6 @@ function Detail() {
 
   let todo = todos.find((todo) => todo.id === Number(id));
 
-  console.log(id);
-  console.log(todo);
-
   return (
     <DetailContainer>
       <DetailID>ID : {id}</DetailID>

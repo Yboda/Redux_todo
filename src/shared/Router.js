@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes, BrowserRouter, useParams } from "react-router-dom";
-import App from "../App";
 import Detail from "../components/Detail";
 import MainPage from "../components/Mainpage";
 

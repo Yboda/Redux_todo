@@ -61,7 +61,7 @@ function TodoInput() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (!input.title || !input.body) return;
-    dispatch(addTodo(input, nextId));
+    dispatch(addTodo(input));
     setInput({
       title: "",
       body: "",
@@ -70,10 +70,8 @@ function TodoInput() {
 
   const dispatch = useDispatch();
 
-  let nextId = useRef(3);
-
   return (
-    <FormContainer>
+    <FormContainer onSubmit={onSubmitHandler}>
       <div>
         제목
         <StInput name="title" value={input.title} onChange={onChangeHandler} />
@@ -82,9 +80,7 @@ function TodoInput() {
         내용
         <StInput name="body" value={input.body} onChange={onChangeHandler} />
       </div>
-      <StAddBtn type="submit" onClick={onSubmitHandler}>
-        추가하기
-      </StAddBtn>
+      <StAddBtn type="submit">추가하기</StAddBtn>
     </FormContainer>
   );
 }

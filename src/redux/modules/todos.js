@@ -3,12 +3,12 @@ const ADD_TODO = "ADD_TODO";
 const TOGGLE_TODO = "TOGGLE_TODO";
 const REMOVE_TODO = "DELETE_TODO";
 
-// // 2. Action Creator         ↓ 페이로드를꼭 인자로 넣어줘야함
-export const addTodo = (todo, nextID) => {
+// // 2. Action Creator   ↓ 페이로드를꼭 인자로 넣어줘야함
+export const addTodo = (todo) => {
   return {
     type: ADD_TODO,
     todo: {
-      id: nextID.current++,
+      id: 0,
       title: todo.title,
       body: todo.body,
       isDone: false,
@@ -46,17 +46,20 @@ const initialState = [
 const TodoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return [...state, action.todo];
+      return [
+        ...state,
+        {
+          ...action.todo,
+          id: state[state.length - 1].id + 1,
+        },
+      ];
 
     case TOGGLE_TODO:
-      console.log(state);
-      console.log(action.id);
       return state.map((todo) =>
         todo.id === action.id ? { ...todo, isDone: !todo.isDone } : todo
       );
 
     case REMOVE_TODO:
-      console.log(state);
       return state.filter((todo) => todo.id !== action.id);
 
     default:

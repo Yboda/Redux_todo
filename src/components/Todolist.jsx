@@ -1,8 +1,6 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import Todoitem from "./Todoitem";
-import { toggleTodo, removeTodo } from "../redux/modules/todos";
 
 const TodoContainer = styled.div`
   width: 1000px;
@@ -11,12 +9,13 @@ const TodoContainer = styled.div`
   margin: 20px auto;
 `;
 
-const StList = styled.div`
+const StList = styled.ul`
   width: 100%;
   height: auto;
   background-color: #fff;
   margin: 10px auto;
   border-radius: 20px;
+  list-style: none;
 `;
 
 const ItemContainer = styled.div`
@@ -25,10 +24,11 @@ const ItemContainer = styled.div`
   background-color: #fff;
   display: flex;
   border-radius: 20px;
+  flex-wrap: wrap;
 `;
 
 const StTitle = styled.div`
-  width: 30%;
+  width: 300px;
   height: 50px;
   text-align: center;
   font-size: 30px;
@@ -38,14 +38,8 @@ const StTitle = styled.div`
 
 function Todolist() {
   const todos = useSelector((state) => {
-    console.log(state.todos);
     return state.todos;
   });
-  const dispatch = useDispatch();
-
-  const onToggle = useCallback((id) => dispatch(toggleTodo(id)), [dispatch]);
-
-  const onRemove = useCallback((id) => dispatch(removeTodo(id)), [dispatch]);
 
   return (
     <TodoContainer>
@@ -55,12 +49,7 @@ function Todolist() {
           {todos
             .filter((todo) => todo.isDone === false)
             .map((todo) => (
-              <Todoitem
-                key={todo.id}
-                todo={todo}
-                onToggle={onToggle}
-                onRemove={onRemove}
-              />
+              <Todoitem key={todo.id} todo={todo} />
             ))}
         </ItemContainer>
       </StList>
@@ -70,12 +59,7 @@ function Todolist() {
           {todos
             .filter((todo) => todo.isDone === true)
             .map((todo) => (
-              <Todoitem
-                key={todo.id}
-                todo={todo}
-                onToggle={onToggle}
-                onRemove={onRemove}
-              />
+              <Todoitem key={todo.id} todo={todo} />
             ))}
         </ItemContainer>
       </StList>

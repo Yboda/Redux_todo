@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import Detail from "./Detail";
+import { removeTodo, toggleTodo } from "../redux/modules/todos";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 
-const StItem = styled.div`
-  margin: 20px 0px 20px 20px;
+const StItem = styled.li`
+  margin: 20px 20px 20px 0;
   width: 300px;
   height: 200px;
   background-color: #fff;
@@ -54,8 +56,12 @@ const DetailBtn = styled.button`
   cursor: pointer;
 `;
 
-function TodoItem({ todo, onToggle, onRemove }) {
+function TodoItem({ todo }) {
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onToggle = useCallback((id) => dispatch(toggleTodo(id)), [dispatch]);
+  const onRemove = useCallback((id) => dispatch(removeTodo(id)), [dispatch]);
 
   return (
     <>
@@ -63,13 +69,13 @@ function TodoItem({ todo, onToggle, onRemove }) {
         <DetailBtn
           todo={todo}
           onClick={() => {
-            Navigate("/" + todo?.id);
+            Navigate("/" + todo.id);
           }}
         >
           상세보기
         </DetailBtn>
-        <StTitle>{todo?.title}</StTitle>
-        <StBody>{todo?.body}</StBody>
+        <StTitle>{todo.title}</StTitle>
+        <StBody>{todo.body}</StBody>
         <BtnBox>
           {todo?.isDone === false ? (
             <StBtn onClick={() => onToggle(todo?.id)} color={"#8c9eff"}>
