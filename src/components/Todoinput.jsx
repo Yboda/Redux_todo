@@ -1,6 +1,9 @@
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { addTodo } from "../redux/modules/todos";
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   width: 850px;
   height: 100px;
   background-color: #fff;
@@ -17,6 +20,7 @@ const FormContainer = styled.div`
 const StInput = styled.input`
   font-size: 20px;
   margin: 10px;
+  padding: 5px;
   border-color: #8c9eff;
   border-radius: 20px;
 `;
@@ -41,20 +45,47 @@ const StAddBtn = styled.button`
 `;
 
 function TodoInput() {
+  let [input, setInput] = useState({
+    title: "",
+    body: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const { value, name } = e.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!input.title || !input.body) return;
+    dispatch(addTodo(input, nextId));
+    setInput({
+      title: "",
+      body: "",
+    });
+  };
+
+  const dispatch = useDispatch();
+
+  let nextId = useRef(3);
+
   return (
-    <div className="form-container">
-      <FormContainer>
-        <div>
-          제목
-          <StInput />
-        </div>
-        <div>
-          내용
-          <StInput />
-        </div>
-        <StAddBtn>추가하기</StAddBtn>
-      </FormContainer>
-    </div>
+    <FormContainer>
+      <div>
+        제목
+        <StInput name="title" value={input.title} onChange={onChangeHandler} />
+      </div>
+      <div>
+        내용
+        <StInput name="body" value={input.body} onChange={onChangeHandler} />
+      </div>
+      <StAddBtn type="submit" onClick={onSubmitHandler}>
+        추가하기
+      </StAddBtn>
+    </FormContainer>
   );
 }
 
