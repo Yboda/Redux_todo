@@ -50,7 +50,7 @@ const TodoReducer = (state = initialState, action) => {
         ...state,
         {
           ...action.todo,
-          id: state[state.length - 1].id + 1,
+          id: state[state.length - 1]?.id + 1 || 0,
         },
       ];
 
