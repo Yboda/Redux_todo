@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
+import Detail from "./Detail";
 
 const StItem = styled.div`
   margin: 20px 0px 20px 20px;
@@ -57,32 +58,34 @@ function TodoItem({ todo, onToggle, onRemove }) {
   const Navigate = useNavigate();
 
   return (
-    <StItem>
-      <DetailBtn
-        todo={todo}
-        onClick={() => {
-          Navigate("/" + todo?.id);
-        }}
-      >
-        상세보기
-      </DetailBtn>
-      <StTitle>{todo?.title}</StTitle>
-      <StBody>{todo?.body}</StBody>
-      <BtnBox>
-        {todo?.isDone === false ? (
-          <StBtn onClick={() => onToggle(todo?.id)} color={"#8c9eff"}>
-            완료
+    <>
+      <StItem>
+        <DetailBtn
+          todo={todo}
+          onClick={() => {
+            Navigate("/" + todo?.id);
+          }}
+        >
+          상세보기
+        </DetailBtn>
+        <StTitle>{todo?.title}</StTitle>
+        <StBody>{todo?.body}</StBody>
+        <BtnBox>
+          {todo?.isDone === false ? (
+            <StBtn onClick={() => onToggle(todo?.id)} color={"#8c9eff"}>
+              완료
+            </StBtn>
+          ) : (
+            <StBtn onClick={() => onToggle(todo?.id)} color={"pink"}>
+              취소
+            </StBtn>
+          )}
+          <StBtn onClick={() => onRemove(todo?.id)} color={"red"}>
+            삭제
           </StBtn>
-        ) : (
-          <StBtn onClick={() => onToggle(todo?.id)} color={"pink"}>
-            취소
-          </StBtn>
-        )}
-        <StBtn onClick={() => onRemove(todo?.id)} color={"red"}>
-          삭제
-        </StBtn>
-      </BtnBox>
-    </StItem>
+        </BtnBox>
+      </StItem>
+    </>
   );
 }
 
