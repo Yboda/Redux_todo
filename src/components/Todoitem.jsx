@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StItem = styled.div`
   margin: 20px 0px 20px 20px;
@@ -49,12 +50,22 @@ const DetailBtn = styled.button`
   background-color: #eee;
   border-color: #8c9eff;
   color: #8c9eff;
+  cursor: pointer;
 `;
 
 function TodoItem({ todo, onToggle, onRemove }) {
+  const Navigate = useNavigate();
+
   return (
     <StItem>
-      <DetailBtn>상세보기</DetailBtn>
+      <DetailBtn
+        todo={todo}
+        onClick={() => {
+          Navigate("/" + todo?.id);
+        }}
+      >
+        상세보기
+      </DetailBtn>
       <StTitle>{todo?.title}</StTitle>
       <StBody>{todo?.body}</StBody>
       <BtnBox>

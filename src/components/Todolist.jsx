@@ -38,6 +38,7 @@ const StTitle = styled.div`
 
 function Todolist() {
   const todos = useSelector((state) => {
+    console.log(state.todos);
     return state.todos;
   });
   const dispatch = useDispatch();
